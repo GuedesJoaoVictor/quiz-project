@@ -1,0 +1,15 @@
+{
+  "scripts": {
+    "dev": "npx nodemon ./index.ts"
+  },
+  "dependencies": {
+    "express": "^4.21.2",
+    "nodemon": "^3.1.9",
+    "ts-node": "^10.9.2"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.0",
+    "@types/nodemon": "^1.19.6",
+    "typescript": "^5.7.3"
+  }
+}
