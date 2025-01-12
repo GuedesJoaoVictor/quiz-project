@@ -1,7 +1,17 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+* {
+    font-family: "Jost", Arial, Helvetica, sans-serif;
+}
+body {
+    height: 100vh;
+}
 
 .bg-color-main {
     background-color: #FFFCF2;
+}
+
+.bg-secondary-color {
+    background-color: #CCC5B9;
 }
