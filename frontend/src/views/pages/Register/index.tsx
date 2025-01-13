@@ -66,8 +66,8 @@ export default function Register() {
     return (
         <div className="flex items-center justify-center w-screen h-screen">
             <div className="bg-secondary-color p-16 rounded-2xl shadow-lg">
-                <h1 className="text-center text-2xl font-bold mb-4">Register</h1>
-                <form className="flex flex-col gap-4">
+                <h1 className="text-center text-3xl font-light mb-4">Register</h1>
+                <form className="flex flex-col gap-4" method={"POST"}>
                     <Input type="text" label="Username:"
                            name="username"
                            value={formData.username}
@@ -83,6 +83,9 @@ export default function Register() {
                     <button type="button" className="bg-slate-700 text-white py-2 rounded" onClick={handleSubmit}>
                         Sign up
                     </button>
+                    <p>You already have an account?
+                        <a className={"text-blue-400"} href={"/login"}> Log In </a>
+                    </p>
                 </form>
             </div>
         </div>

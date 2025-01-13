@@ -10,7 +10,7 @@ interface InputProps {
 export default function Input({ type, label, required, value, name, onChange }: InputProps) {
     return(
         <div className={"flex items-center justify-center"}>
-            <label htmlFor={label} className={"text-black"}>{label}</label>
+            <label htmlFor={label} className={"text-black font-light"}>{label}</label>
             <input className={"bg-input p-1 rounded-xl ml-4"}
                    type={type}
                    required={!!required}
