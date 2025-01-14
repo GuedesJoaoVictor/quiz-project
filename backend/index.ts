@@ -4,6 +4,7 @@ import pool from "./src/configs/database";
 import {DataBaseEnv} from "./src/configs/databaseEnv";
 import session from "express-session";
 import passport from "./src/configs/PassportConfig/passportConfig";
+import cors from "cors";
 
 (async () => {
     try {
@@ -21,17 +22,23 @@ const env = new DataBaseEnv();
 const app: Express = e();
 app.use(e.json());
 app.use(e.urlencoded({extended: true}));
-
+app.use(cors({
+    origin: "http://localhost:5173",
+    credentials: true
+}));
 app.use(session({
     secret: env.password,
     resave: false,
-    saveUninitialized: false
+    saveUninitialized: false,
+    cookie: {
+        httpOnly: true,
+        secure: false,
+        maxAge: 1000 * 60 * 60 * 24
+    }
 }));
-
 app.use(passport.initialize());
 app.use(passport.session());
-
-const router = new Routes(app);
+const router = new Routes();
 
 app.use(router.routes);
 

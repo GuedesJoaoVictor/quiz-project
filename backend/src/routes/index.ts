@@ -1,19 +1,25 @@
-import { Express, Request, Response, Router } from "express";
+import {NextFunction, Request, Response, Router} from "express";
 import { RegisterController } from "../controllers/Register/RegisterController";
 import { LoginController } from "../controllers/Login/LoginController";
-import passport from "../configs/PassportConfig/passportConfig"
-import LoginResponseData from "../models/Login/LoginResponseData";
+import {LogoutController} from "../controllers/Logout/LogoutController";
 
 export class Routes {
 
     private readonly router: Router;
 
-    constructor (app: Express) {
+    constructor () {
         this.router = Router();
         this.setupRoutes();
     }
 
-    private setupRoutes() {  
+    private setupRoutes() {
+        const isAuthenticated = (req: Request, res:Response, next:NextFunction) => {
+            if(req.isAuthenticated()) {
+                return next();
+            }
+            res.status(401).json({success: false, message: "Unauthorized"});
+        }
+
         this.router.post("/register", (req: Request, res: Response) => {
             try {
                 return new RegisterController().handle(req, res);
@@ -23,22 +29,17 @@ export class Routes {
             }
         });
         this.router.post("/login", (req: Request, res: Response) => {
-            passport.authenticate("local", (err: Error, user: LoginResponseData, info: any) => {
-                if (err) {
-                    return res.status(500).json({ success: false, message: {err} });
-                }
-                if (!user) {
-                    return res.status(401).json({ success: false, message: info?.message || "Invalid credentials" });
-                }
-
-                // Log in the user
-                req.logIn(user, (loginErr: Error) => {
-                    if (loginErr) {
-                        return res.status(500).json({ success: false, message: "Login failed" });
-                    }
-                    return res.json({ success: true, user: { id: user.id, username: user.username } });
-                });
-            })(req, res);
+            return new LoginController().handle(req, res);
+        });
+        this.router.get("/", isAuthenticated, (req: Request, res: Response) => {
+            if(req.isAuthenticated()) {
+                res.status(200).json({ success: true, user: req.user});
+                return;
+            }
+            res.status(401).json({ success: true, user: req.user});
+        });
+        this.router.get("/logout", (req: Request, res: Response, next: NextFunction) => {
+            return new LogoutController().handle(req, res, next);
         });
     }
 

@@ -2,6 +2,8 @@ import Input from "../../../components/Input";
 import React, {useState} from "react";
 import AxiosXHR = Axios.AxiosXHR;
 import {Api} from "../../../config/api.ts";
+import {useNavigate} from "react-router-dom";
+import ResponseLoginData from "../../../models/Login/ResponseLoginData.ts";
 
 /**
  * Gerencia a view de Login
@@ -19,6 +21,8 @@ export default function Login() {
         password: ""
     });
 
+    const navigate = useNavigate();
+
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = event.target;
         setFormData((prevState) => ({
@@ -33,19 +37,21 @@ export default function Login() {
                 return;
             }
 
-            const response: AxiosXHR<string> = await Api.use.post("/login", {
+            const response: AxiosXHR<ResponseLoginData> = await Api.use.post("/login", {
                 email: formData.email,
                 password: formData.password
+            }, {
+                withCredentials: true
             });
 
-            document.querySelectorAll("input").forEach((input) => {
-                input.value = ""
-            });
+            if(response.data.success) {
+                navigate("/");
+                return;
+            }
 
-            setFormData({
-                email: "",
-                password: ""
-            });
+            console.error("Error in login", response.data.message);
+
+            clearInputs();
 
             console.log(response);
         }
@@ -56,6 +62,17 @@ export default function Login() {
 
     function dataFormIsBlank() {
         return formData.email == "" || formData.password == ""
+    }
+
+    function clearInputs() {
+        document.querySelectorAll("input").forEach((input) => {
+            input.value = ""
+        });
+
+        setFormData({
+            email: "",
+            password: ""
+        });
     }
 
     return (
