@@ -2,6 +2,7 @@ import {NextFunction, Request, Response, Router} from "express";
 import { RegisterController } from "../controllers/Register/RegisterController";
 import { LoginController } from "../controllers/Login/LoginController";
 import {LogoutController} from "../controllers/Logout/LogoutController";
+import {CreateRoomController} from "../controllers/Rooms/CreateRoom/CreateRoomController";
 
 export class Routes {
 
@@ -40,6 +41,15 @@ export class Routes {
         });
         this.router.get("/logout", (req: Request, res: Response, next: NextFunction) => {
             return new LogoutController().handle(req, res, next);
+        });
+        this.router.post("/rooms/create", (req: Request, res: Response) => {
+           try {
+                return new CreateRoomController().handle(req, res);
+           }
+           catch (error) {
+               console.log(error);
+               res.json({success: false, message: "Internal Server Error"});
+           }
         });
     }
 
