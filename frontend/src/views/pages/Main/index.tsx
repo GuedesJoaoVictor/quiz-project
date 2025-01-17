@@ -3,10 +3,16 @@ import { Api } from "../../../config/api.ts";
 import { useNavigate } from "react-router-dom";
 import AxiosXHR = Axios.AxiosXHR;
 import ResponseUserData from "../../../models/Main/ResponseUserData.ts";
+import Button from "../../../components/Button/Button.tsx";
+import { useState } from "react";
+import Title from "../../../components/Title/index.tsx";
+import ModalRoomName from "./components/ModalRoomName/index.tsx";
 
 export default function Main() {
     const { user, setUser } = useAuth(); // Use o setter aqui
     const navigate = useNavigate();
+    const [ roomName, setRoomName ] = useState<string>("");
+    const [ modalIsVisible, setModalIsVisible] = useState<boolean>(true);
 
     const OnClickLogOut = async () => {
         try {
@@ -21,24 +27,45 @@ export default function Main() {
             console.error("Logout failed:", error);
         }
     };
-
     if (!user) {
         navigate("/login"); // Redireciona para login se o usuário for null
         return null;
     }
 
+    const onClickCreateRoom =  async () => {
+        const response = await Api.use.post("/rooms/create", {
+            userId: user.id,
+            roomName: roomName
+        }, { withCredentials: true });
+
+        console.log(response);
+    };
+
     return (
-        <div className="w-screen h-screen flex justify-center relative">
-            <div className="absolute top-5 right-5">
-                <button className="bg-red-900 text-white py-3 px-16 rounded-3xl" onClick={OnClickLogOut}>
-                    Exit
-                </button>
+        <div className="w-screen h-screen block justify-center relative">
+            <div className="flex justify-end mt-4 mr-4">
+                <Button content={"Exit"}
+                        contentColor={"white"}
+                        color={"red"}
+                        size={"large"}
+                        onClickEvent={OnClickLogOut}/>
             </div>
-            <div className="flex-grow flex justify-center mt-32">
-                <h1 className="text-3xl font-light underline text-center m-7">
-                    Hello {user.username}
-                </h1>
+            <div className="flex justify-end mt-10 mr-24">
+                <Button content={"Create your room"}
+                        color={"cyan"}
+                        size={"medium"}
+                        contentColor={"white"}
+                        onClick={() => setModalIsVisible(true)}/>
             </div>
+            <div className="flex-grow flex justify-center mt-4">
+                <Title content={"Hello " + user.username} 
+                       large="3"
+                       bold={false}
+                       underline={true}/>
+            </div>
+            <ModalRoomName setRoomName={setRoomName}
+                           modalIsVisible={modalIsVisible}
+                           setModalIsVisible={setModalIsVisible}/>
         </div>
     );
 }

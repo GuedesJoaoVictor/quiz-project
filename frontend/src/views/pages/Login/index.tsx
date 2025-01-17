@@ -4,6 +4,7 @@ import AxiosXHR = Axios.AxiosXHR;
 import {Api} from "../../../config/api.ts";
 import {useNavigate} from "react-router-dom";
 import ResponseLoginData from "../../../models/Login/ResponseLoginData.ts";
+import Button from "../../../components/Button/Button.tsx";
 
 /**
  * Gerencia a view de Login
@@ -31,7 +32,8 @@ export default function Login() {
         }));
     }
 
-    const handleSubmit = async () => {
+    const handleSubmit = async (event: React.MouseEvent<HTMLButtonElement>) => {
+        event.preventDefault();
         try {
             if(dataFormIsBlank()) {
                 return;
@@ -61,7 +63,7 @@ export default function Login() {
     } ;
 
     function dataFormIsBlank() {
-        return formData.email == "" || formData.password == ""
+        return formData.email == "" || formData.password == "" || formData.email == " " || formData.password == " "
     }
 
     function clearInputs() {
@@ -88,9 +90,11 @@ export default function Login() {
                            name="password"
                            value={formData.password}
                            onChange={handleChange}/>
-                    <button type="button" className="bg-slate-700 text-white py-2 rounded" onClick={handleSubmit}>
-                        Sign in
-                    </button>
+                    <Button color="blue" 
+                            content="Sign in" 
+                            contentColor="white" 
+                            size="very-small" 
+                            onClickEvent={handleSubmit}/>
                     <p>You already have an account?
                         <a className={"text-blue-400"} href={"/register"}> Register </a>
                     </p>

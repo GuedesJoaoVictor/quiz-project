@@ -15,7 +15,7 @@ export default function MainRoutes() {
         <Route path='/' element={<Main/>}/>
         <Route path='/register' element={<Register/>}/>
         <Route path='/login' element={<Login/>}/>
-        <Route path='/*' element={<Main/>}/> {/* todo - create a not found page*/} 
+        <Route path='/*' element={<Login/>}/> {/* todo - create a not found page*/} 
       </Routes>
     </BrowserRouter>
   );

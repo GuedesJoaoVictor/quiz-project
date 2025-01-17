@@ -2,6 +2,8 @@ import Input from "../../../components/Input/index.tsx"
 import React, {useState} from "react";
 import { Api } from "../../../config/api.ts";
 import AxiosXHR = Axios.AxiosXHR;
+import Button from "../../../components/Button/Button.tsx";
+import Title from "../../../components/Title/index.tsx";
 
 /**
  * Gerencia a view de Registro
@@ -30,7 +32,8 @@ export default function Register() {
         }));
     }
 
-    const handleSubmit = async () => {
+    const handleSubmit = async (event: React.MouseEvent<HTMLButtonElement>) => {
+        event.preventDefault();
         try {
             if(formDataIsBlank()) {
                 return;
@@ -66,7 +69,9 @@ export default function Register() {
     return (
         <div className="flex items-center justify-center w-screen h-screen">
             <div className="bg-secondary-color p-16 rounded-2xl shadow-lg">
-                <h1 className="text-center text-3xl font-light mb-4">Register</h1>
+                <div className="text-center mb-5">
+                    <Title content="Register" large="3"/>
+                </div>
                 <form className="flex flex-col gap-4" method={"POST"}>
                     <Input type="text" label="Username:"
                            name="username"
@@ -80,9 +85,11 @@ export default function Register() {
                            name="password"
                            value={formData.password}
                            onChange={handleChange}/>
-                    <button type="button" className="bg-slate-700 text-white py-2 rounded" onClick={handleSubmit}>
-                        Sign up
-                    </button>
+                    <Button color="blue" 
+                            content="Sign up" 
+                            contentColor="white" 
+                            size="very-small" 
+                            onClickEvent={handleSubmit}/>
                     <p>You already have an account?
                         <a className={"text-blue-400"} href={"/login"}> Log In </a>
                     </p>
