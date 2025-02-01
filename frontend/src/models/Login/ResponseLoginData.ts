@@ -1,9 +1,9 @@
 export default interface ResponseLoginData {
-    success: boolean;
-    user: {
-        id: number,
-        username: string,
-        email: string
-    };
-    message: string;
+  success: boolean;
+  user: {
+    id: number;
+    username: string;
+    email: string;
+  };
+  message: string;
 }

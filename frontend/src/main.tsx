@@ -9,13 +9,13 @@ import Register from './views/pages/Register';
 import Login from './views/pages/Login';
 
 export default function MainRoutes() {
-  return(
+  return (
     <BrowserRouter>
       <Routes>
-        <Route path='/' element={<Main/>}/>
-        <Route path='/register' element={<Register/>}/>
-        <Route path='/login' element={<Login/>}/>
-        <Route path='/*' element={<Login/>}/> {/* todo - create a not found page*/} 
+        <Route path='/' element={<Main />} />
+        <Route path='/register' element={<Register />} />
+        <Route path='/login' element={<Login />} />
+        <Route path='/*' element={<Login />} /> {/* todo - create a not found page*/}
       </Routes>
     </BrowserRouter>
   );
@@ -23,6 +23,6 @@ export default function MainRoutes() {
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <MainRoutes/>
+    <MainRoutes />
   </StrictMode>,
 );
