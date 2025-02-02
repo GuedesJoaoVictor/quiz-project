@@ -1,5 +1,5 @@
+import React, { useState } from "react";
 import { ModalContainer } from "../../../../../components/modals/ModalContainer";
-import React from "react";
 
 interface ModalRoomNameProps {
   setRoomName: (roomName: string) => void;
@@ -12,14 +12,31 @@ export default function ModalRoomName({
   modalIsVisible,
   setModalIsVisible,
 }: ModalRoomNameProps) {
-  if (modalIsVisible) {
-    setRoomName("Guedes");
-  }
+  const [inputValue, setInputValue] = useState("");
+
+  const handleConfirm = () => {
+    setRoomName(inputValue);
+    setModalIsVisible(false);
+  };
 
   return (
-    <ModalContainer hide={modalIsVisible} setHide={setModalIsVisible}>
-      <div>
-        <p>Oi né</p>
+    <ModalContainer hide={!modalIsVisible} setHide={setModalIsVisible}>
+      <div className="bg-white p-4 rounded-md">
+        <p>Digite o nome da sala:</p>
+        <input
+          type="text"
+          value={inputValue}
+          onChange={(e) => setInputValue(e.target.value)}
+          className="border border-gray-300 p-2 rounded-md w-full mt-2"
+        />
+        <div className="flex justify-end mt-4">
+          <button
+            onClick={handleConfirm}
+            className="bg-blue-500 text-white px-4 py-2 rounded-md"
+          >
+            Confirmar
+          </button>
+        </div>
       </div>
     </ModalContainer>
   );
