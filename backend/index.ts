@@ -1,10 +1,12 @@
 import e, { Express } from "express";
 import Routes from "./src/routes";
 import pool from "./src/configs/database";
-import { DataBaseEnv } from "./src/configs/databaseEnv";
 import session from "express-session";
 import passport from "./src/configs/PassportConfig/passportConfig";
 import cors from "cors";
+import { config } from "dotenv";
+
+config();
 
 (async () => {
   try {
@@ -17,7 +19,6 @@ import cors from "cors";
 })();
 
 const PORT = 8000;
-const env = new DataBaseEnv();
 
 const app: Express = e();
 app.use(e.json());
@@ -30,7 +31,7 @@ app.use(
 );
 app.use(
   session({
-    secret: env.password,
+    secret: process.env.PASSWORD || 'defaultSecret',
     resave: false,
     saveUninitialized: false,
     cookie: {

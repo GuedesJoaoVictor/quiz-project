@@ -1,14 +1,11 @@
 import { Pool } from "pg";
-import { DataBaseEnv } from "./databaseEnv";
-
-const dbenv = new DataBaseEnv();
 
 const pool = new Pool({
-    user: dbenv.user,
-    password: dbenv.password,
-    host: dbenv.host,
-    port: dbenv.port,
-    database: dbenv.databaseName
+    user: process.env.DATABASE_USER,
+    password: process.env.DATABASE_PASSWORD,
+    host: process.env.DATABASE_HOST,
+    port: process.env.DATABASE_PORT ? parseInt(process.env.DATABASE_PORT, 10) : undefined,
+    database: process.env.DATABASE_NAME
 });
 
 
