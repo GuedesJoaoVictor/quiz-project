@@ -40,6 +40,8 @@ export default function Main() {
     return null;
   }
 
+  console.log(roomName);
+
   return (
     <div className="w-screen h-screen block justify-center relative">
       <div className="flex justify-end mt-4 mr-4">
