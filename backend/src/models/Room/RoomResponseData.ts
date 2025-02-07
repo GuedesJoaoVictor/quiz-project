@@ -1,4 +1,4 @@
 export default interface RoomResponseData {
-    userId: number,
-    roomName: string;
+  userId: number;
+  roomName: string;
 }

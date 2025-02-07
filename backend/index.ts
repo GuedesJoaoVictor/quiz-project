@@ -4,9 +4,6 @@ import pool from "./src/configs/database";
 import session from "express-session";
 import passport from "./src/configs/PassportConfig/passportConfig";
 import cors from "cors";
-import { config } from "dotenv";
-
-config();
 
 (async () => {
   try {
@@ -31,7 +28,7 @@ app.use(
 );
 app.use(
   session({
-    secret: process.env.PASSWORD || 'defaultSecret',
+    secret: process.env.PASSWORD || "defaultSecret",
     resave: false,
     saveUninitialized: false,
     cookie: {
