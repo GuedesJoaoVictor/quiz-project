@@ -12,7 +12,7 @@ export default function Main() {
   const { user, setUser } = useAuth(); // Use o setter aqui
   const navigate = useNavigate();
   const [roomName, setRoomName] = useState<string>("");
-  const [modalIsVisible, setModalIsVisible] = useState<boolean>(true);
+  const [modalIsVisible, setModalIsVisible] = useState<boolean>(false);
 
   const OnClickLogOut = async () => {
     try {
@@ -57,7 +57,7 @@ export default function Main() {
           color={"cyan"}
           size={"medium"}
           contentColor={"white"}
-          onClickEvent={() => onClickModalVisible}
+          onClickEvent={() => onClickModalVisible()}
         />
       </div>
       <div className="flex-grow flex justify-center mt-4">
@@ -69,6 +69,7 @@ export default function Main() {
         />
       </div>
       <ModalRoomName
+        userId={user.id}
         setRoomName={setRoomName}
         modalIsVisible={modalIsVisible}
         setModalIsVisible={setModalIsVisible}
