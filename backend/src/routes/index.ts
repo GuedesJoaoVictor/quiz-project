@@ -3,6 +3,7 @@ import { RegisterController } from "../controllers/Register/RegisterController";
 import { LoginController } from "../controllers/Login/LoginController";
 import { LogoutController } from "../controllers/Logout/LogoutController";
 import { CreateRoomController } from "../controllers/Rooms/CreateRoom/CreateRoomController";
+import { GetRoomsController } from "../controllers/Rooms/GetRooms/GetRoomsController";
 
 export class Routes {
   private readonly router: Router;
@@ -51,6 +52,14 @@ export class Routes {
     this.router.post("/rooms/create", (req: Request, res: Response) => {
       try {
         return new CreateRoomController().handle(req, res);
+      } catch (error) {
+        console.log(error);
+        res.json({ success: false, message: "Internal Server Error" });
+      }
+    });
+    this.router.get("/rooms/all", (req: Request, res: Response) => {
+      try {
+        return new GetRoomsController().handle(req, res);
       } catch (error) {
         console.log(error);
         res.json({ success: false, message: "Internal Server Error" });

@@ -12,7 +12,12 @@ class CreateRoomController {
       `insert into rooms(owner_id, room_name) values (${userId}, '${roomName}')`
     );
 
-    res.send(response.rows);
+    const room: QueryResult<RoomData> = await pool.query(
+      `select room_name, owner_id, username as owner_name from rooms, users where rooms.room_name = '${roomName}' and rooms.owner_id = ${userId} 
+       and owner_id = users.id`
+    );
+
+    res.send(room.rows[0]);
   }
 }
 

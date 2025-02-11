@@ -2,16 +2,24 @@
 @tailwind components;
 @tailwind utilities;
 * {
-    font-family: "Jost", Arial, Helvetica, sans-serif;
+  font-family: "Jost", Arial, Helvetica, sans-serif;
 }
 body {
-    height: 100vh;
+  height: 100vh;
 }
 
 .bg-color-main {
-    background-color: #FFFCF2;
+  background-color: #fffcf2;
 }
 
 .bg-secondary-color {
-    background-color: #CCC5B9;
+  background-color: #ccc5b9;
+}
+
+.bg-header-rooms {
+  background-color: #252627;
+}
+
+.bg-rooms-color {
+  background-color: #f2efe9;
 }

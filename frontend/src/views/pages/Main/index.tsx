@@ -7,12 +7,15 @@ import Button from "../../../components/Button/Button.tsx";
 import { useState } from "react";
 import Title from "../../../components/Title/index.tsx";
 import ModalRoomName from "./components/ModalRoomName/index.tsx";
+import Rooms from "./components/Rooms/index.tsx";
+import ResponseRoomData from "../../../models/Main/ResponseRoomData.ts";
 
 export default function Main() {
   const { user, setUser } = useAuth(); // Use o setter aqui
   const navigate = useNavigate();
   const [roomName, setRoomName] = useState<string>("");
   const [modalIsVisible, setModalIsVisible] = useState<boolean>(false);
+  const [rooms, setRooms] = useState<ResponseRoomData[] | null>(null);
 
   const OnClickLogOut = async () => {
     try {
@@ -39,8 +42,6 @@ export default function Main() {
     navigate("/login"); // Redireciona para login se o usuário for null
     return null;
   }
-
-  console.log(roomName);
 
   return (
     <div className="w-screen h-screen block justify-center relative">
@@ -70,11 +71,15 @@ export default function Main() {
           underline={true}
         />
       </div>
+      <Rooms rooms={rooms} setRooms={setRooms} />
       <ModalRoomName
         userId={user.id}
+        roomName={roomName}
         setRoomName={setRoomName}
         modalIsVisible={modalIsVisible}
         setModalIsVisible={setModalIsVisible}
+        setRooms={setRooms}
+        rooms={rooms}
       />
     </div>
   );
