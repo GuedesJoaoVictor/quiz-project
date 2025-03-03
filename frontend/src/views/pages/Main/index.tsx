@@ -43,7 +43,7 @@ export default function Main() {
     return null;
   }
 
-  return (
+  return ( 
     <div className="w-screen h-screen block justify-center relative">
       <div className="flex justify-end mt-4 mr-4">
         <Button
